@@ -61,6 +61,15 @@ async function main() {
     const answer3 = "Jupiter";
     console.log(`Planet with shortest day: ${answer3}`);
     const fourthChallengeData = await submitAnswer(answer3);
+
+    console.log('Challenge 4:', fourthChallengeData.nextChallenge);
+    const jupiterData = await getSolarData('bodies/jupiter');
+    console.log("Jupiter data:", jupiterData);
+    const moonCount = jupiterData.moons ? jupiterData.moons.length : 0;
+
+    console.log(`Jupiter has ${moonCount} moons`);
+    const answer4 = moonCount.toString();
+    const fifthChallengeData = await submitAnswer(answer4);
 }
 
 main();
