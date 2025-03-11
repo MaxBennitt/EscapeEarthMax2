@@ -70,6 +70,25 @@ async function main() {
     console.log(`Jupiter has ${moonCount} moons`);
     const answer4 = moonCount.toString();
     const fifthChallengeData = await submitAnswer(answer4);
+
+    console.log('Challenge 5:', fifthChallengeData.nextChallenge);
+    const allMoons = await getSolarData('bodies?filter[]=aroundPlanet,eq,jupiter');
+    console.log("Jupiter's moons and their sizes:");
+    let largestMoon = null;
+    let largestRadius = 0;
+    
+    for (const moon of allMoons.bodies) {
+        if (moon.meanRadius) {
+            console.log(`${moon.englishName}: Mean Radius = ${moon.meanRadius} km`);
+            if (moon.meanRadius > largestRadius) {
+                largestRadius = moon.meanRadius;
+                largestMoon = moon;
+            }
+        }
+    }
+    console.log(`Jupiter's largest moon: ${largestMoon ? largestMoon.englishName : 'Not found'}`);
+    const answer5 = largestMoon ? largestMoon.englishName : "";
+    const sixthChallengeData = await submitAnswer(answer5);
 }
 
 main();
