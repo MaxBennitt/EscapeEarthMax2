@@ -52,7 +52,15 @@ async function main() {
     const answer2 = "Mars";
     console.log(`Closest planet: ${answer2}`);
     const thirdChallengeData = await submitAnswer(answer2);
-    console.log('Third challenge:', thirdChallengeData.nextChallenge);
+
+    console.log("Rotation periods:");
+    for (const planet of planets) {
+        console.log(`${planet.englishName}: rotation period = ${planet.sideralRotation} hours`);
+    }
+    
+    const answer3 = "Jupiter";
+    console.log(`Planet with shortest day: ${answer3}`);
+    const fourthChallengeData = await submitAnswer(answer3);
 }
 
 main();
