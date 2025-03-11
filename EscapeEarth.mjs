@@ -36,8 +36,23 @@ async function submitAnswer(answer) {
 async function main() {
     await start(); 
     const pin = 834;
-    console.log('PIN (difference between the equaRadius & meanRadius):', pin);
-    const secondChallenge = await submitAnswer(pin);
-    console.log('Second challenge:', secondChallenge);
+    console.log('PIN:', pin);
+
+    const secondChallengeData = await submitAnswer(pin);
+    const earthData = await getSolarData('bodies/terre');
+    console.log("Earth's axial tilt:", earthData.axialTilt);
+    const allBodies = await getSolarData('bodies');
+    const planets = allBodies.bodies.filter(body => body.isPlanet);
+    
+    for (const planet of planets) {
+        if (planet.axialTilt !== undefined) {
+            console.log(`${planet.englishName}: axial tilt = ${planet.axialTilt}`);
+        }
+    }
+    const answer2 = "Mars";
+    console.log(`Closest planet: ${answer2}`);
+    const thirdChallengeData = await submitAnswer(answer2);
+    console.log('Third challenge:', thirdChallengeData.nextChallenge);
 }
+
 main();
