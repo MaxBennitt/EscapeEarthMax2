@@ -35,8 +35,14 @@ async function submitAnswer(answer) {
 
 async function main() {
     await start(); 
-    const pin = 834;
-    console.log('PIN:', pin);
+
+    const sunData = await getSolarData('bodies/sun');
+    console.log('Sun data:', sunData);
+    console.log(`Sun equatorial radius: ${sunData.equaRadius}`);
+    console.log(`Sun mean radius: ${sunData.meanRadius}`);
+    
+    const pin = sunData.equaRadius - sunData.meanRadius;
+    console.log('PIN (difference between the equaRadius & meanRadius):', pin);
 
     const secondChallengeData = await submitAnswer(pin);
     const earthData = await getSolarData('bodies/terre');
@@ -49,6 +55,7 @@ async function main() {
             console.log(`${planet.englishName}: axial tilt = ${planet.axialTilt}`);
         }
     }
+
     const answer2 = "Mars";
     console.log(`Closest planet: ${answer2}`);
     const thirdChallengeData = await submitAnswer(answer2);
@@ -62,7 +69,6 @@ async function main() {
     console.log(`Planet with shortest day: ${answer3}`);
     const fourthChallengeData = await submitAnswer(answer3);
 
-    console.log('Challenge 4:', fourthChallengeData.nextChallenge);
     const jupiterData = await getSolarData('bodies/jupiter');
     console.log("Jupiter data:", jupiterData);
     const moonCount = jupiterData.moons ? jupiterData.moons.length : 0;
@@ -71,7 +77,6 @@ async function main() {
     const answer4 = moonCount.toString();
     const fifthChallengeData = await submitAnswer(answer4);
 
-    console.log('Challenge 5:', fifthChallengeData.nextChallenge);
     const allMoons = await getSolarData('bodies?filter[]=aroundPlanet,eq,jupiter');
     console.log("Jupiter's moons and their sizes:");
     let largestMoon = null;
@@ -86,6 +91,7 @@ async function main() {
             }
         }
     }
+
     console.log(`Jupiter's largest moon: ${largestMoon ? largestMoon.englishName : 'Not found'}`);
     const answer5 = largestMoon ? largestMoon.englishName : "";
     const sixthChallengeData = await submitAnswer(answer5);
