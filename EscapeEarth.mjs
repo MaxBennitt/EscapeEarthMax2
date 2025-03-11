@@ -89,6 +89,13 @@ async function main() {
     console.log(`Jupiter's largest moon: ${largestMoon ? largestMoon.englishName : 'Not found'}`);
     const answer5 = largestMoon ? largestMoon.englishName : "";
     const sixthChallengeData = await submitAnswer(answer5);
+
+        const plutoData = await getSolarData('bodies/pluton');
+        console.log("Pluto data:", plutoData);
+        console.log(`Pluto's classification: ${plutoData.bodyType}`);
+        
+        const answer6 = plutoData.bodyType;
+        const skeletonKey = await submitAnswer(answer6);
 }
 
 main();
